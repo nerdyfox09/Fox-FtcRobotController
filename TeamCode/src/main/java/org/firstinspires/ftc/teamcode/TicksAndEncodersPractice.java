@@ -1,19 +1,38 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
+@Autonomous
 public class TicksAndEncodersPractice extends LinearOpMode {
 
-    public DcMotor motor1;
+    public DcMotor motorBL;
+    public DcMotor motorBR;
+    public DcMotor motorFL;
+    public DcMotor motorFR;
 
 
+
+    @Override
     public void runOpMode() {
 
-        motor1 = hardwareMap.get(DcMotor.class, "MotorName");
+        motorBL = hardwareMap.get(DcMotor.class, "motorBackLeft");
+        motorBR = hardwareMap.get(DcMotor.class, "motorBackRight");
+        motorFL = hardwareMap.get(DcMotor.class, "motorFrontLeft");
+        motorFR = hardwareMap.get(DcMotor.class, "motorFrontRight");
 
-        motor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        motorBL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        motorBR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorBR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        motorFL.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        motorFR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motorFR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.addData("Status", "Ready to Start");
         telemetry.update();
@@ -27,22 +46,25 @@ public class TicksAndEncodersPractice extends LinearOpMode {
             double millimetersPerTick = circumference / ticksPerRevolution;
             double targetDistance = 914.4;
             int numTicks = (int) (targetDistance / millimetersPerTick);
-            driveForward(numTicks, 1);
+            driveForward(motorBL, numTicks, -1);
+            driveForward(motorBR, numTicks, 1);
+            driveForward(motorFL, numTicks, -1);
+            driveForward(motorFR, numTicks, 1);
         }
     }
-   public void driveForward(int targetTicks, double power){
+   public void driveForward(DcMotor motor, int targetTicks, double power){
 
-            motor1.setTargetPosition(targetTicks);
+            motor.setTargetPosition(targetTicks);
 
-            motor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            motor1.setPower(power);
+            motor.setPower(power);
 
-            while (motor1.isBusy()){
+            while (motor.isBusy()){
                 telemetry.addData("Target Ticks: ", targetTicks);
                 telemetry.update();
-        }
-            motor1.setPower(0);
+            }
+            motor.setPower(0);
 
     }
 }
