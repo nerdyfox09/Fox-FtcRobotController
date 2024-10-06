@@ -5,15 +5,15 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class TicksAndEncodersPractice extends LinearOpMode {
 
-    public DcMotor motor;
+    public DcMotor motor1;
 
 
     public void runOpMode() {
 
-        motor = hardwareMap.get(DcMotor.class, "MotorName");
+        motor1 = hardwareMap.get(DcMotor.class, "MotorName");
 
-        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        motor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.addData("Status", "Ready to Start");
         telemetry.update();
@@ -32,17 +32,17 @@ public class TicksAndEncodersPractice extends LinearOpMode {
     }
    public void driveForward(int targetTicks, double power){
 
-            motor.setTargetPosition(targetTicks);
+            motor1.setTargetPosition(targetTicks);
 
-            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            motor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            motor.setPower(power);
+            motor1.setPower(power);
 
-            while (motor.isBusy()){
+            while (motor1.isBusy()){
                 telemetry.addData("Target Ticks: ", targetTicks);
                 telemetry.update();
         }
-            motor.setPower(0);
+            motor1.setPower(0);
 
     }
 }
